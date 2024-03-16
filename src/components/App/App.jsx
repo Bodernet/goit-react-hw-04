@@ -14,11 +14,11 @@ const ACCESS_KEY = "A3nx2FXRqtZH1-4NqfORpOXAK1JQFT9rylzqShlpDlI";
 
 function App() {
   const [page, setPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [query, setSearchQuery] = useState("");
   const [imageGallery, setImageGallery] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [isLoadMore, setIsLoadMore] = useState(false);
+  const [showBtn, setShowBtn] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [imageModalData, setImageModalData] = useState({
     imgSrc: "",
@@ -37,7 +37,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (!searchQuery) return;
+    if (!query) return;
     async function fetchImages() {
       try {
         setPage(1);
@@ -47,7 +47,7 @@ function App() {
         const response = await axios.get("photos", {
           params: {
             client_id: ACCESS_KEY,
-            query: searchQuery,
+            query: query,
             per_page: 10,
             page: 1,
           },
@@ -55,12 +55,12 @@ function App() {
         const data = response.data;
         setImageGallery((prevImages) => [...prevImages, ...data.results]);
 
-        setIsLoadMore(page < data.total_pages);
+        setShowBtn(page < data.total_pages);
       } catch (err) {
         setIsError(true);
       } finally {
         setIsLoading(false);
-        // setIsLoadMore(true);
+        // setShowBtn(true);
         if (page > 1) {
           window.scrollBy({
             top: window.innerHeight - 200,
@@ -71,7 +71,7 @@ function App() {
       }
     }
     fetchImages();
-  }, [searchQuery, page]);
+  }, [query, page]);
 
   const onSetSearchQuery = (query) => {
     setSearchQuery(query);
@@ -98,7 +98,7 @@ function App() {
         modalIsOpen={modalIsOpen}
         {...imageModalData}
       />
-      {isLoadMore && <LoadMoreBtn onLoadMore={onNextPage} />}
+      {showBtn && <LoadMoreBtn onLoadMore={onNextPage} />}
     </div>
   );
 }
