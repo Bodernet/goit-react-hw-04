@@ -40,8 +40,6 @@ function App() {
     if (!query) return;
     async function fetchImages() {
       try {
-        setPage(1);
-        setImageGallery([]);
         setIsLoading(true);
         setIsError(false);
         const response = await axios.get("photos", {
@@ -75,6 +73,8 @@ function App() {
 
   const onSetSearchQuery = (query) => {
     setSearchQuery(query);
+    setPage(1);
+    setImageGallery([]);
   };
   const onNextPage = () => {
     setPage((prevPage) => prevPage + 1);
