@@ -11,10 +11,3 @@
   width: 100%;
   height: 100%;
 }
-
-@media screen and (min-width: 768px) {
-  .imageBlock {
-    width: 400px;
-    height: 266px;
-  }
-}
