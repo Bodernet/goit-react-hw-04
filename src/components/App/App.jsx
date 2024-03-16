@@ -89,11 +89,12 @@ function App() {
     <div>
       <SearchBar onSetSearchQuery={onSetSearchQuery} />
       {isError && <ErrorMessage />}
-      {isLoading && <Loader />}
+
       <ImageGallery
         imageGallery={imageGallery}
         handleImageClick={handleImageClick}
       />
+      {isLoading && <Loader />}
       <ImageModal
         style={customStyles}
         closeModal={closeModal}
