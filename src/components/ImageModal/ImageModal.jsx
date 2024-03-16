@@ -1,5 +1,7 @@
 // import css from "./ImageModal.module.css";
 import Modal from "react-modal";
+import css from "./ImageModal.module.css";
+Modal.setAppElement("#root");
 
 const ImageModal = ({
   closeModal,
@@ -10,15 +12,17 @@ const ImageModal = ({
 }) => {
   return (
     <Modal
+      className={css.Modal}
+      overlayClassName={css.Overlay}
       isOpen={modalIsOpen}
       onRequestClose={closeModal}
       contentLabel="Image Modal"
     >
       <div>
         <div>
-          <img src={imgSrc} alt={imgAltDescription} />
+          <img className={css.image} src={imgSrc} alt={imgAltDescription} />
         </div>
-        <div>{imgDescription}</div>
+        <div className={css.Description}>{imgDescription}</div>
       </div>
     </Modal>
   );

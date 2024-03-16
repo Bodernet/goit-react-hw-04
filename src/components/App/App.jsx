@@ -1,5 +1,4 @@
-// import "./App.module.css";
-
+import "./App.module.css";
 import { useEffect, useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
@@ -8,9 +7,7 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
-
-axios.defaults.baseURL = "https://api.unsplash.com/search/";
-const ACCESS_KEY = "A3nx2FXRqtZH1-4NqfORpOXAK1JQFT9rylzqShlpDlI";
+import { getFetchImg } from "../../services/api";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -26,6 +23,19 @@ function App() {
     imgAltDescription: "",
   });
 
+  const per_page = 10;
+
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -40,14 +50,7 @@ function App() {
       try {
         setIsLoading(true);
         setIsError(false);
-        const response = await axios.get("photos", {
-          params: {
-            client_id: ACCESS_KEY,
-            query: query,
-            per_page: 10,
-            page: page,
-          },
-        });
+        const response = await axios.get(getFetchImg(page, per_page, query));
         const data = response.data;
         setImageGallery((prevImages) => [...prevImages, ...data.results]);
 
@@ -92,6 +95,7 @@ function App() {
         handleImageClick={handleImageClick}
       />
       <ImageModal
+        style={customStyles}
         closeModal={closeModal}
         modalIsOpen={modalIsOpen}
         {...imageModalData}
