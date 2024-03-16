@@ -23,7 +23,7 @@ function App() {
     imgAltDescription: "",
   });
 
-  const per_page = 10;
+  const per_page = 12;
 
   const customStyles = {
     content: {
