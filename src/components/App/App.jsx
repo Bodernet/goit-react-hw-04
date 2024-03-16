@@ -24,8 +24,6 @@ function App() {
     imgSrc: "",
     imgDescription: "",
     imgAltDescription: "",
-    imgAuthor: "",
-    imgLikes: 0,
   });
 
   const openModal = () => {
@@ -47,7 +45,7 @@ function App() {
             client_id: ACCESS_KEY,
             query: query,
             per_page: 10,
-            page: 1,
+            page: page,
           },
         });
         const data = response.data;
