@@ -7,11 +7,14 @@ const ImageCard = ({ img, handleImageClick }) => {
     imgAltDescription: img.alt_description,
   };
   return (
-    <div
-      className={css.imageBlock}
-      onClick={() => handleImageClick(imgModData)}
-    >
-      <img className={css.image} src={img.urls.small} alt={img.alt_description} width="350" />
+    <div className={css.imageBlock}>
+      <img
+        className={css.image}
+        src={img.urls.small}
+        alt={img.alt_description}
+        width="350"
+        onClick={() => handleImageClick(imgModData)}
+      />
     </div>
   );
 };

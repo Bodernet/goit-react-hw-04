@@ -2,7 +2,6 @@ import "./App.module.css";
 import { useEffect, useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
-import axios from "axios";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
@@ -50,8 +49,7 @@ function App() {
       try {
         setIsLoading(true);
         setIsError(false);
-        const response = await axios.get(getFetchImg(page, per_page, query));
-        const data = response.data;
+        const data = await getFetchImg(page, per_page, query);
         setImageGallery((prevImages) => [...prevImages, ...data.results]);
 
         setShowBtn(page < data.total_pages);
@@ -70,7 +68,7 @@ function App() {
       }
     }
     fetchImages();
-  }, [query, page]);
+  }, [query, page, per_page]);
 
   const onSetSearchQuery = (query) => {
     setSearchQuery(query);
